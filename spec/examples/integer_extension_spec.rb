@@ -1,4 +1,4 @@
-require 'integer.rb'
+require 'integer'
 require 'support/to_roman_examples'
 
 RSpec.describe 'when converting to roman numerals using Integer#to_roman_numerals' do
