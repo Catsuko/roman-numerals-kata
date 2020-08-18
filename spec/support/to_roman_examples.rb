@@ -25,7 +25,20 @@ RSpec.shared_examples('to roman numerals') do
         'LXXVIII':  78,
         'LXXX':     80,
         'LXXXVII':  87,
-
+        'XC':       90,
+        'XCIX':     99,
+        'C':        100,
+        'CXXIX':    129,
+        'CCXCIV':   294,
+        'CCC':      300,
+        'CD':       400,
+        'CDLVIII':  458,
+        'D':        500,
+        'CM':       900,
+        'CMLIX':    959,
+        'M':        1000,
+        'MD':       1500,
+        'MMCDXCIV': 2494,
     }.each do |rn, n|
         it "#{n} becomes #{rn}" do
             expect(subject.call(n)).to eq rn.to_s
