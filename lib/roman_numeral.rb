@@ -1,5 +1,3 @@
-# TODO: Replace nil argument with Null Object
-# TODO: Find a better way to handle the substitution case
 class RomanNumeral
     def initialize(character, quantity: 1, next_glyph: nil)
         @character = character
@@ -8,17 +6,10 @@ class RomanNumeral
     end
 
     def convert(n)
-        if can_handle?(n)
-            @character * occurences_in(n) + convert_using_next(remainder(n))
-        else
-           @next_glyph&.convert(1).to_s + convert(n.succ)
-        end
+        amount_to_convert = n + subtraction_for(n)
+        convert_using_next(subtraction_for(n)) + (@character * occurences_in(amount_to_convert) + convert_using_next(remainder(amount_to_convert)))
     end
-
-    def can_handle?(n)
-        occurences_in(n) < 4 && (@next_glyph.nil? || @next_glyph.can_handle?(remainder(n)))
-    end
-
+    
     private
 
     def remainder(n)
@@ -31,5 +22,10 @@ class RomanNumeral
 
     def convert_using_next(n)
         @next_glyph&.convert(n).to_s
+    end
+
+    def subtraction_for(n)
+        subtraction = 10.pow(Math.log10([@quantity.pred, 1].max).floor)
+        n.positive? && n + subtraction == @quantity ? subtraction : 0
     end
 end
