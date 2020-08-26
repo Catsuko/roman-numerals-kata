@@ -5,9 +5,13 @@ class RomanNumeral
         @next_glyph = next_glyph
     end
 
+    # TODO: Clean up these variable names
+    # TODO: Refactor last line so it is easier to read
     def convert(n)
-        amount_to_convert = n + subtraction_for(n)
-        convert_using_next(subtraction_for(n)) + (@character * occurences_in(amount_to_convert) + convert_using_next(remainder(amount_to_convert)))
+        full_glyphs = @character * occurences_in(n)
+        subtraction = subtraction_for(remainder(n))
+        remainder = remainder(n) + subtraction
+        full_glyphs + convert_using_next(subtraction) + @character * occurences_in(remainder) + convert_using_next(remainder(remainder))
     end
     
     private
@@ -26,6 +30,6 @@ class RomanNumeral
 
     def subtraction_for(n)
         subtraction = 10.pow(Math.log10([@quantity.pred, 1].max).floor)
-        n.positive? && n + subtraction == @quantity ? subtraction : 0
+        n.positive? && n + subtraction >= @quantity ? subtraction : 0
     end
 end
